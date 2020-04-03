@@ -1,0 +1,8 @@
+
+Sys = { file_exists = Sys_file_exists };
+
+include "ocp-autoconf.d/ezpg.ocp2inc";
+include "autoconf/config.ocp2gen";
+ocaml.version = autoconf.package_version;
+
+include "build.common" ;

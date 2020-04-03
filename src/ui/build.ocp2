@@ -1,0 +1,19 @@
+
+OCaml.library("misc-js", ocaml + {
+  files = [ "misc_js.ml", pp_js ];
+  requires = [ "ocplib-utils-js" ];
+});
+
+OCaml.library("ui-lib", ocaml + {
+  files = [
+    "common.ml";
+    "www_request.ml";
+    "api_request.ml";
+    "dispatch.ml"
+  ];
+  requires = [ "common"; "misc-js"; "api-services-js" ];
+});
+
+libs = [ "ui-lib" ];
+
+js_program("skeleton-ui", "main.ml", libs);

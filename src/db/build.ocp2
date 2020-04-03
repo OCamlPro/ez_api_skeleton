@@ -1,0 +1,37 @@
+
+OCaml.library("db-versions", ocaml + {
+  files = [ "versions.ml" ];
+  requires = [ "ez-pgocaml"; "misc" ];
+});
+
+OCaml.library("db-misc", ocaml + {
+  files = [ "misc_db.ml" ];
+  requires = [ "common" ];
+});
+
+OCaml.library("db-lwt", ocaml + {
+  files = [ "monad_lwt.ml"; "db_lwt.ml", pp_pgocaml ];
+  requires = [ "lwt.unix"; "misc"; "pgocaml"; "ez-pgocaml" ];
+});
+
+OCaml.library("db-reader", ocaml + {
+  files = [ "dbr.ml", pp_pgocaml ];
+  requires = [
+    "db-misc";
+    "db-lwt";
+  ];
+});
+
+OCaml.library("db-writer", ocaml + {
+  files = [ "dbw.ml", pp_pgocaml ];
+  requires = [
+    "db-versions";
+    "db-misc";
+    "db-lwt";
+  ];
+});
+
+OCaml.program("db-updater", ocaml + {
+  files = [ "db_updater.ml" ];
+  requires = [ "db-versions" ];
+});

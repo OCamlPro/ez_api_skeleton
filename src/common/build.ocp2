@@ -1,0 +1,9 @@
+OCaml.library("misc", ocaml + {
+  files = [ "misc.ml" ];
+  requires = [ "skeleton-config" ];
+});
+
+OCaml.library("common", ocaml + {
+  files = [ "data_types.ml"; "utils.ml" ];
+  requires = [ "misc" ];
+});

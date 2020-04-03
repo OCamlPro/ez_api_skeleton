@@ -1,0 +1,2 @@
+let () =
+  Dispatch.init ()
