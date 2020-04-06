@@ -26,11 +26,12 @@ function js_program(name, file, libs){
   });
 }
 
-OCaml.library("skeleton-config", ocaml+{
+OCaml.library(project_name + "-config", ocaml+{
   files = [
     "sConfig.ml", {
       ocp2ml = true;
       database = database;
+      project = project_name;
       env_strings = [
         "database";
         "ocp::commit";

@@ -1,3 +1,4 @@
+PROJECT_NAME:=skeleton
 DATABASE:=skeleton
 HOST:=/var/run/postgresql
 
@@ -7,12 +8,18 @@ all: db-updater
 	cp -f _obuild/api-server/api-server.asm api-server
 	$(MAKE) website
 
-db-updater:
+db-updater: write-config
 	$(MAKE) db-update
+
+write-config:
+	@echo Updating ocp-autoconf.d/config.ocp2inc
+	@mkdir -p ocp-autoconf.d
+	@echo "(* Automatically generated from Makefile + Makefile.database *)" > ocp-autoconf.d/config.ocp2inc
+	@echo "project_name=\"$(PROJECT_NAME)\";" >> ocp-autoconf.d/config.ocp2inc
 
 website:
 	mkdir -p www
-	cp -f _obuild/skeleton-ui/skeleton-ui.js www
+	cp -f _obuild/$(PROJECT_NAME)-ui/$(PROJECT_NAME)-ui.js www
 	rsync -arv static/* www
 
 submodule:

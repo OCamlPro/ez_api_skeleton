@@ -1,6 +1,6 @@
 OCaml.library("misc", ocaml + {
   files = [ "misc.ml" ];
-  requires = [ "skeleton-config" ];
+  requires = [ project_name + "-config" ];
 });
 
 OCaml.library("common", ocaml + {

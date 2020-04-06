@@ -16,4 +16,4 @@ OCaml.library("ui-lib", ocaml + {
 
 libs = [ "ui-lib" ];
 
-js_program("skeleton-ui", "main.ml", libs);
+js_program(project_name + "-ui", "main.ml", libs);
