@@ -42,7 +42,12 @@ configure: conf
 	./configure
 
 pgocaml-install:
+	git clone git@github.com:darioteixeira/pgocaml.git libs/pgocaml
 	opam install libs/pgocaml
+
+ocp-build-install:
+	git clone git@github.com:ocamlpro/ocp-build.git libs/ocp-build
+	opam install libs/ocp-build
 
 DBUPDATER=db-updater
 DBWITNESS=--witness db-version.txt

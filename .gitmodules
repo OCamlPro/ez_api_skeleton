@@ -8,6 +8,3 @@
 [submodule "libs/ez-api"]
 	path = libs/ez-api
 	url = git@github.com:OCamlPro/ez-api.git
-[submodule "libs/pgocaml"]
-	path = libs/pgocaml
-	url = git@github.com:darioteixeira/pgocaml.git
