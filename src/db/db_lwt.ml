@@ -1,4 +1,4 @@
-let database = SConfig.database
+let database = PConfig.database
 let unix_domain_socket_dir = "/var/run/postgresql"
 let verbose_mode = ref false
 let verbose_counter = ref 0

@@ -1,4 +1,4 @@
 let () =
-  EzPGUpdater.main SConfig.database
+  EzPGUpdater.main PConfig.database
     ~downgrades:Versions.downgrades
     ~upgrades:Versions.upgrades

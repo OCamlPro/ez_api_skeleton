@@ -6,8 +6,8 @@ let return = EzAPIServerUtils.return
 
 let version _params () =
   Dbr.get_version () >>= fun v_db_version -> return {
-    v_commit = SConfig.commit;
-    v_date = SConfig.date;
-    v_db = SConfig.database;
+    v_commit = PConfig.commit;
+    v_date = PConfig.dates;
+    v_db = PConfig.database;
     v_db_version
   }

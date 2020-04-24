@@ -1,6 +1,10 @@
 PROJECT_NAME:=skeleton
 DATABASE:=skeleton
-HOST:=/var/run/postgresql
+DB_HOST:=/var/run/postgresql
+RLS_DIR:=www
+WITH_VERSION:=false
+
+-include Makefile.config
 
 all: db-updater
 	$(MAKE) BASE64_3=true -C libs/ocplib-jsutils base64-conf
@@ -16,6 +20,7 @@ write-config:
 	@mkdir -p ocp-autoconf.d
 	@echo "(* Automatically generated from Makefile + Makefile.database *)" > ocp-autoconf.d/config.ocp2inc
 	@echo "project_name=\"$(PROJECT_NAME)\";" >> ocp-autoconf.d/config.ocp2inc
+	@echo "with_version=$(WITH_VERSION);" >> ocp-autoconf.d/config.ocp2inc
 
 website:
 	mkdir -p www
@@ -49,9 +54,15 @@ ocp-build-install:
 	git clone git@github.com:ocamlpro/ocp-build.git libs/ocp-build
 	opam install libs/ocp-build
 
+warnings:
+	ocp-build --project-warnings
+
+release:
+	sudo cp -r www/* $(RLS_DIR)
+
 DBUPDATER=db-updater
 DBWITNESS=--witness db-version.txt
 DBNAME=--database $(DATABASE)
-DBSOCKETDIR=--socket-dir $(HOST)
+DBSOCKETDIR=--socket-dir $(DB_HOST)
 -include libs/ez-pgocaml/libs/ez-pgocaml/Makefile.ezpg
 -include libs/ocplib-jsutils/ocp-autoconf.d/Makefile
