@@ -2,9 +2,9 @@
 	path = libs/ez-pgocaml
 	url = git@github.com:ocpmax/ez-pgocaml.git
 	branch = update-pgocaml
-[submodule "libs/ocplib-jsutils"]
-	path = libs/ocplib-jsutils
-	url = git@github.com:OCamlPro/ocplib-jsutils.git
 [submodule "libs/ez-api"]
 	path = libs/ez-api
 	url = git@github.com:OCamlPro/ez-api.git
+[submodule "libs/vue_jsoo"]
+	path = libs/vue_jsoo
+	url = git@gitlab.com:o-labs/vue_jsoo.git

@@ -3,11 +3,11 @@ DATABASE:=skeleton
 DB_HOST:=/var/run/postgresql
 RLS_DIR:=www
 WITH_VERSION:=false
+WEBHOST:=http://localhost:8888
 
 -include Makefile.config
 
 all: db-updater
-	$(MAKE) BASE64_3=true -C libs/ocplib-jsutils base64-conf
 	PGDATABASE=$(DATABASE) ocp-build
 	cp -f _obuild/api-server/api-server.asm api-server
 	$(MAKE) website
@@ -21,6 +21,7 @@ write-config:
 	@echo "(* Automatically generated from Makefile + Makefile.database *)" > ocp-autoconf.d/config.ocp2inc
 	@echo "project_name=\"$(PROJECT_NAME)\";" >> ocp-autoconf.d/config.ocp2inc
 	@echo "with_version=$(WITH_VERSION);" >> ocp-autoconf.d/config.ocp2inc
+	@echo "web_host=\"$(WEBHOST)\";" >> ocp-autoconf.d/config.ocp2inc
 
 website:
 	mkdir -p www
@@ -65,4 +66,3 @@ DBWITNESS=--witness db-version.txt
 DBNAME=--database $(DATABASE)
 DBSOCKETDIR=--socket-dir $(DB_HOST)
 -include libs/ez-pgocaml/libs/ez-pgocaml/Makefile.ezpg
--include libs/ocplib-jsutils/ocp-autoconf.d/Makefile

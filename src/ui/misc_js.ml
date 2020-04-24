@@ -1,4 +1,37 @@
-open Ocp_js
+open Js_of_ocaml
+
+let to_optdef f x = match Js.Optdef.to_option x with
+  | None -> None
+  | Some x -> Some (f x)
+
+let optdef f = function
+  | None -> Js.undefined
+  | Some x -> Js.def (f x)
+
+let convdef f x = match Js.Optdef.to_option x with
+  | None -> Js.undefined
+  | Some x -> Js.def (f x)
+
+let to_opt f x = match Js.Opt.to_option x with
+  | None -> None
+  | Some x -> Some (f x)
+
+let opt f = function
+  | None -> Js.null
+  | Some x -> Js.some (f x)
+
+let convopt f x = match Js.Opt.to_option x with
+  | None -> Js.null
+  | Some x -> Js.some (f x)
+
+let args () =
+  match Url.url_of_string (Js.to_string Dom_html.window##.location##.href) with
+  | None -> []
+  | Some url -> match url with
+    | Url.Http hu | Url.Https hu -> hu.Url.hu_arguments
+    | Url.File fu -> fu.Url.fu_arguments
+
+let find_arg arg = List.assoc_opt arg (args ())
 
 module IntMap = Map.Make(struct type t = int let compare = compare end)
 module UpdateOnFocus = struct
@@ -8,7 +41,7 @@ module UpdateOnFocus = struct
   let incr_page () = incr current_page
 
   let auto_refresh =
-    ref (match Jsloc.find_arg "refresh" with
+    ref (match find_arg "refresh" with
         | Some ( "0" | "false" | "n" | "N" ) -> false
         | None | Some _ -> true)
 

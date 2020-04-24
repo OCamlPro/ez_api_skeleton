@@ -43,11 +43,11 @@ OCaml.library(project_name + "-config", ocaml+{
     "pConfig.ml", {
       ocp2ml = true;
       project = project_name;
-      database = database;
       env_strings = [
         "project";
-        "database" ] +
-      version_fields
+        "database";
+        "web_host";
+      ] + version_fields
     }];
 });
 
