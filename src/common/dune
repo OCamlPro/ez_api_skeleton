@@ -1,0 +1,10 @@
+(library
+ (name misc)
+ (modules misc)
+ (libraries project_config))
+
+(library
+ (name data_common)
+ (wrapped false)
+ (modules data_types utils)
+ (libraries misc))

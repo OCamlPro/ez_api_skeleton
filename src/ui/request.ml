@@ -1,7 +1,7 @@
 open Data_types
 module S = Services
 
-let host = ref (EzAPI.TYPES.BASE "http://localhost:8080")
+let host = ref (EzAPI.TYPES.BASE PConfig.web_host)
 
 let info_encoding = Json_encoding.(
     conv
@@ -28,8 +28,8 @@ let init f =
        f info) ()
 
 
-let get0 ?post ?headers ?params ?error service msg f =
+let get0 ?post ?headers ?params ?error ?(msg="") service f =
   EzXhr.get0 !host service msg ?post ?headers ?error ?params f ()
 
-let get1 ?post ?headers ?params ?error service msg f arg =
+let get1 ?post ?headers ?params ?error ?(msg="") service f arg =
   EzXhr.get1 !host service msg ?post ?headers ?error ?params f arg

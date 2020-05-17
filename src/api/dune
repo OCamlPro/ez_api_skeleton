@@ -1,0 +1,16 @@
+(library
+ (name api_services)
+ (wrapped false)
+ (modules encoding services)
+ (libraries ez-api.js data_common))
+
+(library
+ (name api_lib)
+ (wrapped false)
+ (modules handlers api)
+ (libraries ez-api.server api_services db_lwt))
+
+(executable
+ (name api_server)
+ (modules api_server)
+ (libraries api_lib))

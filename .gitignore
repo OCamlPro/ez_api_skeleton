@@ -5,3 +5,5 @@ ocp-autoconf.d
 opam
 www
 db-version.txt
+*.merlin
+_build

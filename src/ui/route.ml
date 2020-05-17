@@ -2,28 +2,30 @@ open Js_of_ocaml
 open Js
 
 let get_app ?app () = match app with
-  | None -> !Vdata.app
+  | None -> !V.app
   | Some app -> app
 
 let route ?app path =
   Common.logs ("route " ^ path);
   let app = get_app ?app () in
-  app##.currentPath := string path;
+  app##.path := string path;
   match String.split_on_char '/' path with
-  | [] -> ()
   | [ path ] -> begin match path with
-      | _ -> ()
+      | _ ->
+        Common.logs "TEST0";
+        Request.get0 Services.version (fun {v_db; v_db_version} ->
+            app##.database := string v_db;
+            app##.db_version_ := v_db_version)
     end
-  | _ -> ()
+  | _ -> Common.logs "TEST2"
 
-let route_js (app : Vdata.data_js t) path =
+let route_js app path =
   route ~app (to_string path);
   Common.set_path (to_string path)
 
 let init () =
-  Vdata.add_method "route" route_js;
+  V.add_method1 "route" route_js;
   let path = Common.path () in
-  Vdata.add_data "currentPath" (string path);
   Dom_html.window##.onpopstate := Dom_html.handler (fun _e ->
       route @@ Common.path ();
       _true);
