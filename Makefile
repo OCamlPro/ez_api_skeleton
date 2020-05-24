@@ -31,12 +31,15 @@ install:
 	dune install
 
 project-db-updater:
-	PGDATABASE=$(DATABASE) dune build src/db
+	PGDATABASE=$(DATABASE) dune build src/db/db-update
 
 project-db-update: project-db-updater
 	$(MAKE) db-update
 
-DBUPDATER=_build/default/src/db/db_updater.exe
+build-deps:
+	opam install --deps-only .
+
+DBUPDATER=_build/default/src/db/db-update/db_updater.exe
 DBWITNESS=--witness db-version.txt
 DBNAME=--database $(DATABASE)
 -include libs/ez-pgocaml/libs/ez-pgocaml/Makefile.ezpg

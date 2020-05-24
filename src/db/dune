@@ -6,12 +6,7 @@
 (library
  (name db_lwt)
  (wrapped false)
- (modules misc_db monad_lwt db_lwt dbr dbw )
+ (modules misc_db monad_lwt db_lwt db)
  (libraries lwt.unix data_common versions)
  (preprocessor_deps (env_var PGDATABASE))
  (preprocess (pps pgocaml_ppx)))
-
-(executable
- (name db_updater)
- (modules db_updater)
- (libraries versions))
