@@ -1,45 +1,65 @@
 PROJECT_NAME:=skeleton
 DATABASE:=skeleton
 WEB_HOST:=http://localhost:8888
+API_HOST:=http://localhost:8080
+API_PORT:=8080
 RLS_DIR:=www
+CONTACT_EMAIL:=
+VERSION:=1.0
 
 -include Makefile.config
 
-all: build website
+.EXPORT_ALL_VARIABLES:
 
-build: project-db-update
-	PGDATABASE=$(DATABASE) dune build
-	cp -u _build/default/src/api/api_server.exe api-server
-	chmod +w api-server
+PGDATABASE=$(DATABASE)
+
+all: build website api-server openapi
+
+db-updater:
+	@dune build src/db/db-update
+
+config/db-version.txt:
+	@mkdir -p config
+	@echo 0 > config/db-version.txt
+
+db-update: config/db-version.txt db-updater
+	@_build/default/src/db/db-update/db_updater.exe --witness config/db-version.txt --database $(PGDATABASE)
+
+build: db-update
+	dune build --profile release
 
 website:
-	mkdir -p www
-	cp -f _build/default/src/ui/main_ui.bc.js www/$(PROJECT_NAME)-ui.js
-	rsync -arv static/* www
+	@mkdir -p www
+	@cp -f _build/default/src/ui/main_ui.bc.js www/$(PROJECT_NAME)-ui.js
+	@rsync -ar static/* www
+	@cp config/info.json www
+	@sed -i 's/%{project_name}/$(PROJECT_NAME)/g' www/index.html
 
-submodule:
-	git submodule init
-	git submodule update
+api-server: _build/default/src/api/api_server.exe
+	@mkdir -p bin
+	@cp -f _build/default/src/api/api_server.exe bin/api-server
 
 release:
-	sudo cp -r www/* $(RLS_DIR)
+	@sudo cp -r www/* $(RLS_DIR)
 
 clean:
-	dune clean
+	@dune clean
 
 install:
-	dune install
-
-project-db-updater:
-	PGDATABASE=$(DATABASE) dune build src/db/db-update
-
-project-db-update: project-db-updater
-	$(MAKE) db-update
+	@dune install
 
 build-deps:
-	opam install --deps-only .
+	@opam install --deps-only .
 
-DBUPDATER=_build/default/src/db/db-update/db_updater.exe
-DBWITNESS=--witness db-version.txt
-DBNAME=--database $(DATABASE)
--include libs/ez-pgocaml/libs/ez-pgocaml/Makefile.ezpg
+config:
+	@mkdir -p config
+	@echo "{\"apis\": [\"$(API_HOST)\"]}" > config/info.json
+	@echo "{\"port\": $(API_PORT)}" > config/api_config.json
+
+init: build-deps config
+
+git-init:
+	git init
+
+openapi: _build/default/src/api/openapi.exe
+	@_build/default/src/api/openapi.exe --version $(VERSION) --title "$(PROJECT_NAME) API" --contact "$(CONTACT_EMAIL)" --servers "api" $(API_HOST) -o www/openapi.json

@@ -1,0 +1,15 @@
+[Unit]
+Description  = Skeleton API
+Wants        = network-online.target postgresql.service postgresql@.service
+After        = network-online.target postgresql.service postgresql@.service
+
+[Service]
+User         = <user>
+Group        = <user>
+ExecStart    = <wd_path>/scripts/api.sh start
+ExecStop     = <wd_path>/scripts/api.sh stop
+Type         = forking
+Restart      = on-failure
+
+[Install]
+WantedBy     = multi-user.target

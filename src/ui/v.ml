@@ -22,4 +22,4 @@ let init path =
     val mutable database = string ""
     val mutable db_version_ = 0
   end in
-  init ~data_js ()
+  init ~data_js ~show:true ()

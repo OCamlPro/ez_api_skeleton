@@ -1,9 +1,11 @@
 (rule
  (action
   (write-file pConfig.ml
-   "let x = \"%{env:PROJECT_NAME=skeleton}\"
-let database = \"%{env:PGDATABSE=skeleton}\"
-let web_host = \"%{env:WEB_HOST=http://localhost:8888}\"")))
+   "let project = \"%{env:PROJECT_NAME=}\"
+let database = \"%{env:PGDATABASE=}\"
+let web_host = \"%{env:WEB_HOST=}\"
+let api_host = \"%{env:API_HOST=}\"
+let api_port = %{env:API_PORT=}")))
 
 (library
  (name project_config)

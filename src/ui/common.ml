@@ -37,3 +37,6 @@ let set_path ?(scroll=true) ?(args=[]) path =
   let path = Js.some @@ Js.string @@ "/" ^ path ^ args in
   Dom_html.window##.history##pushState path (Js.string "") path;
   if scroll then Dom_html.window##scroll 0 0
+
+let wait ?(t=1.) f =
+  Dom_html.window##setTimeout (Js.wrap_callback f) t |> ignore

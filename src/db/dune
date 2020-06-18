@@ -1,6 +1,7 @@
 (library
  (name versions)
  (modules versions)
+ (preprocess (pps pgocaml_ppx))
  (libraries ez-pgocaml misc))
 
 (library

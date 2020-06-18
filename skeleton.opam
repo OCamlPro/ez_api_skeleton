@@ -8,18 +8,14 @@ homepage: "https://gitlab.com/o-labs/skeleton"
 bug-reports: "https://gitlab.com/o-labs/skeleton/-/issues"
 depends: [
   "dune" {>= "2.4"}
-  "js_of_ocaml-lwt" {= "3.5.2"}
-  "ocplib-json-typed" {>= "0.7.0"}
-  "lwt" {= "4.5.0"}
-  "lwt_log"
-  "ezjsonm"
+  "vue-jsoo"
+  "ez-api"
   "calendar"
   "geoip"
-  "cohttp-lwt-unix" {>= "2.0.0"}
+  "cohttp-lwt-unix"
   "re"
-  "httpaf-lwt-unix" {>= "0.6.0"}
-  "extunix" {>= "0.2.0"}
-  "ocurl" {>= "0.8.0"}
+  "pgocaml_ppx"
+  "ez-pgocaml"
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -37,6 +33,9 @@ build: [
 ]
 dev-repo: "git://gitlab.com/o-labs/skeleton"
 pin-depends: [
-  [ "pgocaml.4.2.1" "git+https://github.com/darioteixeira/pgocaml.git" ]
-  [ "pgocaml_ppx.4.2.1" "git+https://github.com/darioteixeira/pgocaml.git" ]
+  [ "pgocaml.4.2.1" "git+https://github.com/ocpmax/pgocaml.git" ]
+  [ "pgocaml_ppx.4.2.1" "git+https://github.com/ocpmax/pgocaml.git" ]
+  [ "vue-jsoo.~dev" "git+https://gitlab.com/o-labs/vue-jsoo.git" ]
+  [ "ez-api.~dev" "git+https://github.com/ocamlpro/ez-api.git" ]
+  [ "ez-pgocaml.~dev" "git+https://github.com/ocpmax/ez-pgocaml.git" ]
 ]

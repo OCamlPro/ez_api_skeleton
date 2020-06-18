@@ -1,14 +1,18 @@
-let api_port = ref 8080
+let api_port = ref PConfig.api_port
 
-let speclist = [
-  "-p", Arg.Set_int api_port, "API server port";
-]
+let load_config filename =
+  try
+    let ic = open_in filename in
+    let json = Ezjsonm.from_channel ic in
+    close_in ic ;
+    let port = Json_encoding.destruct Encoding.api_config json in
+    (match port with None -> () | Some port -> api_port := port);
+  with _ -> Printf.eprintf "Fatal error: cannot parse config file %S\n%!" filename
 
 let server services =
   Printexc.record_backtrace true;
-  Arg.parse speclist (fun str ->
-      Printf.eprintf "Fatal error: unexpected argument %S\n%!" str;
-      raise (Arg.Bad str)) "API server" ;
+  Arg.parse [] (fun config_file ->
+      load_config config_file) "API server" ;
   let servers = [ !api_port, EzAPIServerUtils.API services ] in
   Lwt_main.run (
     Printf.eprintf "Starting servers on ports [%s]\n%!"
