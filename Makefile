@@ -59,6 +59,7 @@ config:
 init: build-deps config
 
 git-init:
+	rm -rf .git
 	git init
 
 openapi: _build/default/src/api/openapi.exe
