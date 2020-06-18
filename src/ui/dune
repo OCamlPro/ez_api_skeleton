@@ -1,0 +1,20 @@
+(library
+ (name misc_js)
+ (modules misc_js)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml))
+
+(library
+ (name ui_lib)
+ (wrapped false)
+ (modules common v request route)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries data_common misc_js api_services vue-jsoo ez-api.xhr))
+
+(executable
+ (name main_ui)
+ (modules main_ui)
+ (libraries ui_lib)
+ (modes js)
+ (js_of_ocaml
+  (flags (:standard --no-sourcemap))))

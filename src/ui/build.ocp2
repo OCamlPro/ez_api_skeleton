@@ -1,17 +1,17 @@
 
 OCaml.library("misc-js", ocaml + {
   files = [ "misc_js.ml", pp_js ];
-  requires = [ "ocplib-utils-js" ];
+  requires = [ "js_of_ocaml" ];
 });
 
 OCaml.library("ui-lib", ocaml + {
   files = [
-    "common.ml";
-    "www_request.ml";
-    "api_request.ml";
-    "dispatch.ml"
+    "common.ml", pp_js;
+    "vdata.ml";
+    "request.ml";
+    "route.ml", pp_js;
   ];
-  requires = [ "common"; "misc-js"; "api-services-js" ];
+  requires = [ "common"; "misc-js"; "api-services-js"; "vue-js-lib" ];
 });
 
 libs = [ "ui-lib" ];

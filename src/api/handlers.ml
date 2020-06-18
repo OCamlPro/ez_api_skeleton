@@ -1,13 +1,11 @@
+open Lwt.Infix
 open Data_types
 (* open Services *)
 
-let (>>=) = Lwt.(>>=)
-let return = EzAPIServerUtils.return
+let to_api p =
+  Lwt.catch (fun () -> p) (fun exn -> Lwt.return @@ Error exn) >>= fun p ->
+  EzAPIServerUtils.return p
 
-let version _params () =
-  Dbr.get_version () >>= fun v_db_version -> return {
-    v_commit = PConfig.commit;
-    v_date = PConfig.dates;
-    v_db = PConfig.database;
-    v_db_version
-  }
+let version _params () = to_api (
+    Db.get_version () >|= fun v_db_version ->
+    Ok { v_db = PConfig.database; v_db_version })

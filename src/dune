@@ -1,0 +1,11 @@
+(rule
+ (action
+  (write-file pConfig.ml
+   "let x = \"%{env:PROJECT_NAME=skeleton}\"
+let database = \"%{env:PGDATABSE=skeleton}\"
+let web_host = \"%{env:WEB_HOST=http://localhost:8888}\"")))
+
+(library
+ (name project_config)
+ (wrapped false)
+ (modules pConfig))
