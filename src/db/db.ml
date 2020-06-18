@@ -1,7 +1,6 @@
+open Lwt.Infix
 open Misc_db
 open Db_lwt
-
-let (>|=) = Lwt.(>|=)
 
 let get_version () =
   with_dbh >>> fun dbh ->

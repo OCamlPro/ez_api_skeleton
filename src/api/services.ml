@@ -1,11 +1,12 @@
 open Data_types
 open Encoding
+open EzAPI
 
-let section_main = EzAPI.section "API"
+let section_main = section "API"
 
-let version : version EzAPI.service0 =
-  EzAPI.service
+let version : (version, exn, no_security) service0 =
+  service
     ~section:section_main
     ~name:"version"
     ~output:version
-    EzAPI.Path.(root // "version")
+    Path.(root // "version")

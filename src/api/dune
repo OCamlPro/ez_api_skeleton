@@ -2,7 +2,7 @@
  (name api_services)
  (wrapped false)
  (modules encoding services)
- (libraries ez-api.js data_common))
+ (libraries ez-api.common data_common))
 
 (library
  (name api_lib)
