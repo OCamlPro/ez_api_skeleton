@@ -2,7 +2,7 @@ open Js_of_ocaml
 open Js
 
 let get_app ?app () = match app with
-  | None -> !V.app
+  | None -> V.app ()
   | Some app -> app
 
 let route ?app path =

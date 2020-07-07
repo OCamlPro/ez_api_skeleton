@@ -35,7 +35,6 @@ dev-repo: "git://gitlab.com/o-labs/skeleton"
 pin-depends: [
   [ "pgocaml.4.2.1" "git+https://github.com/ocpmax/pgocaml.git" ]
   [ "pgocaml_ppx.4.2.1" "git+https://github.com/ocpmax/pgocaml.git" ]
-  [ "vue-jsoo.~dev" "git+https://gitlab.com/o-labs/vue-jsoo.git" ]
   [ "ez-api.~dev" "git+https://github.com/ocamlpro/ez-api.git" ]
   [ "ez-pgocaml.~dev" "git+https://github.com/ocpmax/ez-pgocaml.git" ]
 ]
