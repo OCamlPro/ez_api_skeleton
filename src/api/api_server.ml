@@ -9,6 +9,10 @@ let load_config filename =
     (match port with None -> () | Some port -> api_port := port);
   with _ -> Printf.eprintf "Fatal error: cannot parse config file %S\n%!" filename
 
+let catch path exn =
+  EzAPIServerUtils.reply_json 500 @@
+  Json_encoding.(construct (obj1 (req "error" string)) @@ path ^ ": " ^ Printexc.to_string exn)
+
 let server services =
   Printexc.record_backtrace true;
   Arg.parse [] (fun config_file ->
@@ -19,7 +23,7 @@ let server services =
       (String.concat ","
          (List.map (fun (port,_) ->
               string_of_int port) servers));
-    EzAPIServer.server servers
+    EzAPIServer.server ~catch servers
   )
 
 let () =

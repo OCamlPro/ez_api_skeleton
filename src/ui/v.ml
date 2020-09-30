@@ -5,14 +5,14 @@ class type error = object
   method content : js_string t optdef readonly_prop
 end
 
-class type data = object
+class type app = object
   method path : js_string t prop
   method database : js_string t prop
   method db_version_ : int prop
 end
 
 include Vue_js.Make(struct
-    type nonrec data = data
+    type data = app
     type all = data
     let id = "app"
   end)
