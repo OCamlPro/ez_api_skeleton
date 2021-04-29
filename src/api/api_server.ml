@@ -10,8 +10,15 @@ let load_config filename =
   with _ -> Printf.eprintf "Fatal error: cannot parse config file %S\n%!" filename
 
 let catch path exn =
-  EzAPIServerUtils.reply_json 500 @@
-  Json_encoding.(construct (obj1 (req "error" string)) @@ path ^ ": " ^ Printexc.to_string exn)
+  EzAPIServerUtils.Answer.return
+    ~headers:EzAPIServerUtils.Answer.headers
+    ~code:500 @@
+  (Ezjsonm.to_string @@
+   `A [
+   Json_encoding.(
+     construct (obj1
+                  (req "error" string))
+     @@ path ^ ": " ^ Printexc.to_string exn) ])
 
 let server services =
   Printexc.record_backtrace true;

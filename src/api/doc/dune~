@@ -1,0 +1,3 @@
+(executable
+ (name openapi)
+ (libraries api ez_api.openAPI))

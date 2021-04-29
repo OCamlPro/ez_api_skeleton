@@ -2,7 +2,7 @@
  (name versions)
  (modules versions)
  (preprocess (pps pgocaml_ppx))
- (libraries ez-pgocaml misc))
+ (libraries ez_pgocaml misc))
 
 (library
  (name db_lwt)

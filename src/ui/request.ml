@@ -9,10 +9,12 @@ let wrap_res ?error f = function
     | None -> Common.logs s
     | Some e -> e 500 (Some s)
 
-let get0 ?post ?headers ?params ?error ?(msg="") ?(host= !host) service f =
-  EzRequest.ANY.get0 host service msg ?post ?headers ?error ?params (wrap_res ?error f) ()
-let get1 ?post ?headers ?params ?error ?(msg="") ?(host= !host) service f arg =
-  EzRequest.ANY.get1 host service msg ?post ?headers ?error ?params (wrap_res ?error f) arg
+let get0 ?post ?headers ?params ?error ?msg ?(host= !host) service f =
+  EzRequest.ANY.get0 host service ?msg ?post ?headers ?error ?params
+    (wrap_res ?error f)
+let get1 ?post ?headers ?params ?error ?msg ?(host= !host) service f arg =
+  EzRequest.ANY.get1 host service ?msg ?post ?headers ?error ?params
+    (wrap_res ?error f) arg
 
 let info_service : (www_server_info, exn, EzAPI.no_security) EzAPI.service0 =
   EzAPI.service

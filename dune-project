@@ -13,10 +13,10 @@
  (synopsis "Skeleton of website with API REST")
  (depends
   vue-jsoo
-  ez-api
+  ez_api
   calendar
   geoip
   cohttp-lwt-unix
   re
   pgocaml_ppx
-  ez-pgocaml))
+  ez_pgocaml))

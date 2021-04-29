@@ -9,7 +9,7 @@
  (wrapped false)
  (modules common v request route)
  (preprocess (pps js_of_ocaml-ppx))
- (libraries data_common misc_js api_services vue-jsoo ez-api.xhr))
+ (libraries data_common misc_js api_services vue-jsoo))
 
 (executable
  (name main_ui)

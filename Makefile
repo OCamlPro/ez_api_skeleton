@@ -28,7 +28,7 @@ db-update: config/db-version.txt db-updater
 build: db-update
 	dune build --profile release
 
-website:
+website: config/info.json
 	@mkdir -p www
 	@cp -f _build/default/src/ui/main_ui.bc.js www/$(PROJECT_NAME)-ui.js
 	@rsync -ar static/* www
@@ -51,7 +51,7 @@ install:
 build-deps:
 	@opam install --deps-only .
 
-config:
+config/info.json config/api_config.json:
 	@mkdir -p config
 	@echo "{\"apis\": [\"$(API_HOST)\"]}" > config/info.json
 	@echo "{\"port\": $(API_PORT)}" > config/api_config.json
@@ -62,5 +62,5 @@ git-init:
 	rm -rf .git
 	git init
 
-openapi: _build/default/src/api/openapi.exe
-	@_build/default/src/api/openapi.exe --version $(VERSION) --title "$(PROJECT_NAME) API" --contact "$(CONTACT_EMAIL)" --servers "api" $(API_HOST) -o www/openapi.json
+openapi: _build/default/src/api/doc/openapi.exe
+	@_build/default/src/api/doc/openapi.exe --version $(VERSION) --title "$(PROJECT_NAME) API" --contact "$(CONTACT_EMAIL)" --servers "api" $(API_HOST) -o www/openapi.json

@@ -9,13 +9,13 @@ bug-reports: "https://gitlab.com/o-labs/skeleton/-/issues"
 depends: [
   "dune" {>= "2.4"}
   "vue-jsoo"
-  "ez-api"
+  "ez_api"
   "calendar"
   "geoip"
   "cohttp-lwt-unix"
   "re"
   "pgocaml_ppx"
-  "ez-pgocaml"
+  "ez_pgocaml"
 ]
 build: [
   ["dune" "subst"] {pinned}

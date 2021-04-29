@@ -3,3 +3,4 @@ bin
 config
 *.merlin
 _build
+_opam
